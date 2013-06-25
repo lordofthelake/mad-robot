@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head></head>
+<body>
+Common network client implementations
+ <p>
+<b><u>Usage Examples</b></u></br><br/>
+<b>XML-RPC client</b>
+<pre>
+XMLRPCClient client = new XMLRPCClient("http://foo.bar.com");
+// add 2 to 4
+int sum = (Integer) client.call("add", 2, 4);
+// check whether x is inside range 4..10
+boolean isInside = (Boolean) client.call("isInside", x, 4, 10);
+// capitalize string
+String capitalized = (String) client.call("capitalize", "to be or not to be");
+</pre>
+ </p>
+</body>
+
+</html>

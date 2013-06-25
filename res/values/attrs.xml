@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Attribute sets for custom widgets DO NOT EDIT -->
+<resources>
+
+    <!-- Attributes for com.madrobot.ui.widgets.WebImageView -->
+    <declare-styleable name="WebImageView">
+        <attr format="string" name="imageUrl" />
+        <attr format="boolean" name="autoLoad" />
+        <attr format="integer" name="progressDrawable" />
+        <attr format="integer" name="errorDrawable" />
+    </declare-styleable>
+
+    <!-- Attributes for com.madrobot.ui.widgets.HorizontalScrollView -->
+    <declare-styleable name="HorizontalScrollView">
+        <attr format="integer" name="snapVelocity" />
+        <attr format="dimension" name="pageWidth" />
+        <attr format="integer" name="pageAnimationDuration" />
+    </declare-styleable>
+    <!-- Attributes for com.madrobot.ui.widgets.WheelView -->
+    <declare-styleable name="WheelView">
+        <attr format="integer" name="topDrawable" />
+        <attr format="integer" name="bottomDrawable" />
+        <attr format="boolean" name="isCyclic" />
+        <attr format="boolean" name="drawTopDrawable" />
+        <attr format="boolean" name="drawBottomDrawable" />
+        <attr format="integer" name="selectorDrawable" />
+        <attr format="boolean" name="drawSelector" />
+    </declare-styleable>
+
+    <!-- Attributes for com.madrobot.ui.widgets.ZoomableImageView -->
+    <declare-styleable name="ZoomableImageView">
+        <attr format="integer" name="maxZoomSteps" />
+        <attr format="boolean" name="doubleTapToZoom" />
+        <attr format="float" name="minMaxZoom" />
+        <attr format="float" name="pinchToZoomMinDistance" />
+        <attr format="integer" name="angleTolerant" />
+    </declare-styleable>
+
+    <!-- Attributes for com.madrobot.ui.widgets.SortableListView -->
+    <declare-styleable name="SortableListView">
+        <attr format="dimension" name="normalHeight" />
+        <attr format="dimension" name="expandedHeight" />
+        <attr format="reference" name="grabberView" />
+        <attr format="integer" name="draggingBackgroundDrawable" />
+        <attr name="removeMode">
+            <enum name="none" value="-1" />
+            <enum name="fling" value="0" />
+            <enum name="slide" value="1" />
+            <enum name="slideRight" value="1" />
+            <enum name="slideLeft" value="2" />
+        </attr>
+    </declare-styleable>
+
+</resources>

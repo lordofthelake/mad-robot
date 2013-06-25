@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head></head>
+<body>
+OAuth library.
+ <p>
+ <b>Signing an HTTP message using OAuthConsumer</b><br/>
+ If you have already obtained an access token from your service provider that allows you to access a protected resource, you can sign a request to that resource using Signpost as follows<br/>
+ 	<pre>
+		// create a consumer object and configure it with the access
+        // token and token secret obtained from the service provider
+        OAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY,
+                                             CONSUMER_SECRET);
+        consumer.setTokenWithSecret(ACCESS_TOKEN, TOKEN_SECRET);
+
+        // create an HTTP request to a protected resource
+        URL url = new URL("http://example.com/protected");
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+
+        // sign the request
+        consumer.sign(request);
+
+        // send the request
+        request.connect();
+     </pre>
+     <p>
+     <b>NOTE:</b> When using HttpURLConnection, you cannot sign POST requests that carry query parameters in the message payload (i.e. requests of type application/x-www-form-urlencoded). This is not a limitation of Signpost per se, but with the way URLConnection works. Server communication with URLConnection is based on data streams, which means that whenever you write something to the connection, it will be sent to the server immediately. This data is not buffered, and there is simply no way for Signpost to inspect that data and include it in a signature. Hence, when you have to sign requests which contain parameters in their body, you have to use an HTTP library like Apache Commons HttpComponents and the respective Signpost module. (This restriction does not apply to requests which send binary data such as documents or files, because that data won't become part of the signature anyway.)
+     </p>
+     <br/>
+     <b>Obtaining a request token using OAuthProvider</b><br/>
+Obtaining a request token from the OAuth service provider is the first step in the 3-way handshake defined by OAuth. In a second step (which is beyond the scope of Signpost or any OAuth library) the user must then authorize this request token by granting your application access to protected resources on a special website defined by the OAuth service provider.<br/>
+	<pre>
+	// create a new service provider object and configure it with
+        // the URLs which provide request tokens, access tokens, and
+        // the URL to which users are sent in order to grant permission
+        // to your application to access protected resources
+        OAuthProvider provider = new CommonsHttpOAuthProvider(
+                REQUEST_TOKEN_ENDPOINT_URL, ACCESS_TOKEN_ENDPOINT_URL,
+                AUTHORIZE_WEBSITE_URL);
+
+        // fetches a request token from the service provider and builds
+        // a url based on AUTHORIZE_WEBSITE_URL and CALLBACK_URL to
+        // which your app must now send the user
+        String url = provider.retrieveRequestToken(consumer, CALLBACK_URL);
+	</pre>
+	
+	If your application cannot receive callbacks (e.g. because it's a desktop app), then you must replace CALLBACK_URL with one of these values:<br/>
+<ul>
+<li>If the service provider you're communicating with implements version 1.0a of the protocol, then you must pass "oob" or OAuth.OUT_OF_BAND to indicate that you cannot receive callbacks.</li>
+<li>If the service provider is still using the older 1.0 protocol, then you must pass null to indicate that you cannot receive callbacks.</li>
+<li>If you get a 401 during these steps: Please make sure that when passing a callback URL, your applications is registered as being able to receive callbacks from your service provider. If you do NOT do that, then the service provider may decide to reject your request, because it thinks it's illegitimate. Twitter, for instance, will do this.</li>
+</ul>
+
+<b>Obtaining an access token using OAuthProvider</b><br/>
+The third and last step in the "OAuth dance" is to exchange the blessed request token for an access token, which the client can then use to access protected resources on behalf of the user. Again, this is very simple to do with Signpost:
+<pre>
+        provider.retrieveAccessToken(consumer, verificationCode);
+</pre>
+The verificationCode is only meaningful for service providers implementing OAuth 1.0a. Depending on whether you provided a callback URL or out-of-band before, this value is either being passed to your application during callback as the oauth_verifier request parameter, or you must obtain this value manually from the user of your application.
+
+On success, the OAuthConsumer connected to this OAuthProvider has now a valid access token and token secret set, and can start signing messages!
+	
+ </p>
+</body>
+
+</html>

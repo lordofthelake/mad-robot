@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head></head>
+<body>
+	JSON serializer/deserializer
+	<p>
+	<p>The name of the java bean has to be the same as declared in the
+		JSON object. If the name is different we use the @SerializedName
+		annotation. Eg: @SerializedName("my name")</p>
+	<br />
+	<p>Customization of the json's array size is also possible using
+		the @ItemType annotation. Eg: @ItemType(size=10). This helps when we
+		need to restrict the number of array elements to be deserialized.</p>
+	<br />
+
+	<b>Serialization</b>
+	<br />
+	<pre> 
+		String jsonContent =
+		JSONSerializer.getInstance().serializer([json content]);
+		</pre>
+	<br />
+	<b>DeSerialization</b>
+	<br />
+	<PRE>
+		Object obj = JSONDeserializer.getInstance().deserialize(<Object>.class, jsonContentStream);
+		
+	
+	
+	
+	</PRE>
+
+	</p>
+</body>
+
+</html>
